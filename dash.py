@@ -10,6 +10,7 @@ flag_status = 0
 first_status = 0
 redzone_status = 0
 title_status = 0
+reverse_status = 0
 possession_status = 0
 touchdown_status = 0  # 1 for HOME, 2 for AWAY
 Htimeouts = 3  # Initial timeouts for the home team
@@ -21,6 +22,7 @@ flag_elem = ET.SubElement(root, 'flag')
 first_elem = ET.SubElement(root, 'first')
 redzone_elem = ET.SubElement(root, 'redzone')
 title_elem = ET.SubElement(root, 'title')
+reverse_elem = ET.SubElement(root, 'reverse')
 possession_elem = ET.SubElement(root, 'possession')
 touchdown_elem = ET.SubElement(root, 'touchdown')
 Htimeouts_elem = ET.SubElement(root, 'Htimeouts')
@@ -40,7 +42,7 @@ def background_task():
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    global flag_status, first_status, redzone_status, title_status, possession_status, touchdown_status, Htimeouts, Vtimeouts
+    global flag_status, first_status, redzone_status, title_status, possession_status, touchdown_status, Htimeouts, Vtimeouts, reverse_status
 
     if request.method == 'POST':
         if 'flag' in request.form:
@@ -59,6 +61,11 @@ def index():
         if 'title' in request.form:
             title_status = int(request.form['title'])
             title_elem.text = str(title_status)
+
+        if 'reverse' in request.form:
+            reverse_status = int(request.form['reverse'])
+            reverse_elem.text = str(reverse_status)
+
 
         if 'possession' in request.form:
             selected_value = int(request.form['possession'])
@@ -99,7 +106,7 @@ def index():
         tree = ET.ElementTree(root)
         tree.write('dashboard_data.xml')
 
-    return render_template('football_dash.html', flag=flag_status, first=first_status, redzone=redzone_status, title=title_status, possession=possession_status, touchdown=touchdown_status, Htimeouts=Htimeouts, Vtimeouts=Vtimeouts)
+    return render_template('football_dash.html', flag=flag_status, first=first_status, redzone=redzone_status, title=title_status, possession=possession_status, touchdown=touchdown_status, Htimeouts=Htimeouts, Vtimeouts=Vtimeouts, reverse=reverse_status)
 
 if __name__ == '__main__':
     app.run(debug=True)

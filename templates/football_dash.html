@@ -105,6 +105,9 @@
                 <form method="post">
                     <button type="submit" class="button {% if title == 1 %}active{% endif %} black" name="title" value="{{ 1-title }}">TITLE</button>
                 </form>
+                <form method="post">
+                    <button type="submit" class="button {% if reverse == 1 %}active{% endif %} orange" name="reverse" value="{{ 1-reverse }}">REVERSE</button>
+                </form>
             </div>
         </div>
         <div class="section">

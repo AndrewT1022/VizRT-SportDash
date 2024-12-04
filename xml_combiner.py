@@ -1,55 +1,63 @@
-import xml.etree.ElementTree as ET
 from time import sleep
+import xml.etree.ElementTree as ET
 
-def combine_xml_files():
+PARENT_1_FILE = "FBLive.xml"
+PARENT_2_FILE = "dashboard_data.xml"
+CHILD_FILE = "scorebug.xml"
+
+
+#append parent files to child file repeatedly
+def xmlCombine():
+    list1 = ['flag', 'redzone', 'first', 'possession', 'title', 'touchdown', 'Htimeouts', 'Vtimeouts', 'reverse']
+    list2 = ['clock', 'clockmin', 'clocksec', 'playclock', 'Hscore', 'Vscore', 'down', 'downtext', 'togo', 'ballon', 'downdist', 'quarter', 'qtrtext']
     while True:
         try:
-            # Read the contents of FBLive.xml
-            with open('FBLive.xml', 'r') as file1:
-                xml1 = file1.read()
+            #read parent 1 file
+            with open(PARENT_1_FILE, "r") as parent1:
+                xml1 = parent1.read()
+            
+            #read parent 2 file
+            with open(PARENT_2_FILE, "r") as parent2:
+                xml2 = parent2.read()
 
-            # Read the contents of dashboard_data.xml
-            with open('dashboard_data.xml', 'r') as file2:
-                xml2 = file2.read()
-
-            # Parse both XML files
+            #parsse parent files
             root1 = ET.fromstring(xml1)
             root2 = ET.fromstring(xml2)
 
-            # Create a new root element for scorebug.xml
-            combined_root = ET.Element('info')
+            #create root element for child
+            childRoot = ET.Element("info")
 
-            # Add elements from FBLive.xml to the combined root
-            elements_to_add = [
-                'clock', 'clockmin', 'clocksec', 'playclock', 'Hscore', 'Vscore', 'down', 'downtext', 'togo', 'ballon', 'downdist', 'quarter', 'qtrtext'
-            ]
-            for element_name in elements_to_add:
-                element = root1.find(f'.//{element_name}')
+            reverse_element = root2.find('.//reverse')
+            reverse_flag = reverse_element is not None and reverse_element.text and reverse_element.text.strip() == '1'
+
+
+
+            for element in list2:
+                childElement = root1.find(f".//{element}")
+                if childElement is not None:
+                    if reverse_flag and element in ("Hscore", "Vscore"):
+                        # Swap Hscore and Vscore
+                        swapped_element_name = "Vscore" if element == "Hscore" else "Hscore"
+                        swapped_element = root1.find(f".//{swapped_element_name}")
+                        if swapped_element is not None:
+                            swapped_element_copy = ET.Element(element)
+                            swapped_element_copy.text = swapped_element.text
+                            childRoot.append(swapped_element_copy)
+                    else:
+                        childRoot.append(childElement)
+
+            for element in list1:
                 if element is not None:
-                    combined_root.append(element)
+                    childElement = root2.find(element)
+                    childRoot.append(childElement)
 
-            # Overwrite with elements from dashboard_data.xml
-            elements_to_overwrite = [
-                'flag', 'redzone', 'first', 'possession', 'title', 'touchdown', 'Htimeouts', 'Vtimeouts'
-            ]
-            for element_name in elements_to_overwrite:
-                element = root2.find(f'.//{element_name}')
-                if element is not None:
-                    combined_root.append(element)
+            childTree = ET.ElementTree(childRoot)
 
-            # Create an ElementTree with the combined root
-            combined_tree = ET.ElementTree(combined_root)
+            childTree.write(CHILD_FILE)
 
-            # Write the combined data to scorebug.xml
-            combined_tree.write('scorebug.xml')
-
-            # Wait for one second before updating again
             sleep(0.1)
-
         except Exception as e:
-            print(f"Error: {e}")
-            # Wait for one second before trying again
+            print(f"Error {e}")
             sleep(0.1)
 
-if __name__ == "__main__":
-    combine_xml_files()
+xmlCombine()
