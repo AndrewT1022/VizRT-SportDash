@@ -36,9 +36,6 @@ def reset_touchdown():
     tree = ET.ElementTree(root)
     tree.write('dashboard_data.xml')  # Update the XML file
 
-def background_task():
-    # Add any background tasks you may have here
-    pass
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -109,4 +106,4 @@ def index():
     return render_template('football_dash.html', flag=flag_status, first=first_status, redzone=redzone_status, title=title_status, possession=possession_status, touchdown=touchdown_status, Htimeouts=Htimeouts, Vtimeouts=Vtimeouts, reverse=reverse_status)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Soccer Dash</title>
+    <style>
+        /* Dark theme styling */
+        body {
+            background-color: #222;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .dashboard {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        .title {
+            font-size: 36px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+        .section-header {
+            font-size: 24px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .button-container {
+            display: flex;
+            gap: 20px;
+        }
+        .button {
+            background-color: #555;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #444;
+        }
+        .button.active {
+            background-color: #999;
+        }
+        .yellow {
+            background-color: #ffd700;
+        }
+        .red {
+            background-color: #ff0000;
+        }
+        .blue {
+            background-color: #0074D9;
+        }
+        .orange {
+            background-color: #FFA500;
+        }
+        .black {
+            background-color: #000;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <div class="title">SOCCER DASHBOARD</div>
+        <div class="section">
+            <div class="section-header">CARDS</div>
+            <div class="button-container">
+                <form method="post">
+                    <button type="submit" class="button {% if vCard == 1 %}active{% endif %} red" name="vCard" value="{{ 1-vCard }}">VISITOR</button>
+                </form>
+                <form method="post">
+                    <button type="submit" class="button {% if hCard == 1 %}active{% endif %} red" name="hCard" value="{{ 1-hCard }}">HOME</button>
+                </form>
+            </div>
+        </div>
+        <div class="section">
+            <div class="section-header">UTILITIES</div>
+            <div class="button-container">
+                <form method="post">
+                    <button type="submit" class="button {% if title == 1 %}active{% endif %} black" name="title" value="{{ 1-title }}">TITLE</button>
+                </form>
+                <form method="post">
+                    <button type="submit" class="button {% if reverse == 1 %}active{% endif %} orange" name="reverse" value="{{ 1-reverse }}">REVERSE</button>
+                </form>
+                <form method="post">
+                    <button type="submit" class="button {% if period == 1 %}active{% endif %} yellow" name="period" value="{{ 1-period }}">PERIOD</button>
+                </form>
+            </div>
+        </div>
+        <div class="section">
+            <div class="section-header">GOALS</div>
+            <div class="button-container">
+                <form method="post">
+                    <button type="submit" class="button orange" name="vGoal" value="1">Away Team</button>
+                </form>
+                <form method="post">
+                    <button type="submit" class="button blue" name="hGoal" value="1">Home Team</button>
+                </form>
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>
