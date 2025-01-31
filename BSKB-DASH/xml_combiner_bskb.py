@@ -1,14 +1,14 @@
 from time import sleep
 import xml.etree.ElementTree as ET
 
-PARENT_1_FILE = "SOCLive.xml"
+PARENT_1_FILE = "BSKBLive.xml"
 PARENT_2_FILE = "dashboard_data.xml"
 CHILD_FILE = "scorebug.xml"
 
 
 #append parent files to child file repeatedly
 def xmlCombine():
-    list1 = ['title', 'goal', 'period', 'reverse', 'hCard', 'vCard']
+    list1 = ['title', 'goal', 'period', 'reverse', 'hBonus', 'vBonus']
     list2 = ['clock', 'clockmin', 'clocksec', 'playclock', 'Hscore', 'Vscore', 'quarter', 'qtrtext']
     while True:
         try:

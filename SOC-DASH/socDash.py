@@ -3,8 +3,6 @@ from flask import Flask, render_template, request, jsonify
 import threading
 import time
 
-from xml_combiner_soc.py import xmlCombine
-
 app = Flask(__name__)
 
 # Initialize the initial values of the toggle buttons
