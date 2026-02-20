@@ -12,6 +12,7 @@ goal_status = 0  # 1 for HOME, 2 for AWAY
 hCard_status = 0
 vCard_status = 0
 period_status = 0
+sponsor_status = 0
 
 
 # Create an initial XML structure
@@ -22,6 +23,7 @@ goal_elem = ET.SubElement(root, 'goal')
 vCard_elem = ET.SubElement(root, 'vCard')
 hCard_elem = ET.SubElement(root, 'hCard')
 period_elem = ET.SubElement(root, 'period')
+sponsor_elem = ET.SubElement(root, 'sponsor')
 
 
 def reset_goal():
@@ -35,7 +37,7 @@ def reset_goal():
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    global title_status, goal_status, reverse_status, vCard_status, hCard_status, period_status
+    global title_status, goal_status, reverse_status, vCard_status, hCard_status, period_status, sponsor_status
 
     if request.method == 'POST':
     
@@ -69,13 +71,17 @@ def index():
             hCard_status = int(request.form['hCard'])
             hCard_elem.text = str(hCard_status)
 
+        if 'sponsor' in request.form:
+            sponsor_status = int(request.form['sponsor'])
+            sponsor_elem = str(sponsor_status)
+
        
 
 
         tree = ET.ElementTree(root)
         tree.write('dashboard_data.xml')
 
-    return render_template('soccer_dash.html', title=title_status, goal=goal_status, reverse=reverse_status, period=period_status, vCard=vCard_status, hCard=hCard_status)
+    return render_template('soccer_dash.html', title=title_status, goal=goal_status, reverse=reverse_status, period=period_status, vCard=vCard_status, hCard=hCard_status, sponsor=sponsor_status)
 
 if __name__ == '__main__':
     app.run()
