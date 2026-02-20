@@ -74,6 +74,9 @@
             background-color: #000;
             border: none;
         }
+        .pink {
+            background-color: #FF69B4;
+        }
     </style>
 </head>
 <body>
@@ -102,6 +105,9 @@
                 <form method="post">
                     <button type="submit" class="button {% if period == 1 %}active{% endif %} yellow" name="period" value="{{ 1-period }}">PERIOD</button>
                 </form>
+                <form method="post">
+                    <button type="submit" class="button {% if sponsor == 1 %}active{% endif %} pink" name="sponsor" value="{{ 1-sponsor }}">SPONSOR</button>
+                </form>
             </div>
         </div>
         <div class="section">
@@ -119,3 +125,4 @@
     </div>
 </body>
 </html>
+
