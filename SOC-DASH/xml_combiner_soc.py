@@ -8,7 +8,7 @@ CHILD_FILE = "scorebug.xml"
 
 #append parent files to child file repeatedly
 def xmlCombine():
-    list1 = ['title', 'goal', 'period', 'reverse', 'hCard', 'vCard']
+    list1 = ['title', 'goal', 'period', 'reverse', 'hCard', 'vCard', 'sponsor']
     list2 = ['clock', 'clockmin', 'clocksec', 'playclock', 'Hscore', 'Vscore', 'quarter', 'qtrtext']
     while True:
         try:
@@ -61,3 +61,4 @@ def xmlCombine():
             sleep(0.1)
 
 xmlCombine()
+
